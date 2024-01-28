@@ -1,0 +1,12 @@
+.item-name {
+  font-weight: 600;
+}
+
+.todo-item {
+  text-align: left;
+}
+
+.item-bg-danger {
+  background-color: rgb(250, 116, 116);
+  padding-left: 0px;
+}

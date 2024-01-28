@@ -1,0 +1,7 @@
+/* Using this class you can align all the children inside the container. */
+.container {
+  text-align: center;
+  width: 70%;
+  margin: 0px auto;
+  min-width: 500px;
+}

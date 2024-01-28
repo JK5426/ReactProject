@@ -1,0 +1,15 @@
+.add-todo {
+  text-align: left;
+}
+
+.add-todo input {
+  width: 100%;
+}
+
+.item-row {
+  margin: 10px 5px;
+}
+
+.cus-btn {
+  min-width: 80px;
+}
