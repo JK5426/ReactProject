@@ -1,10 +1,10 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 
 export const PostList = createContext({
   postList: [],
   addPost: () => {},
-  addIntialPosts: () => {},
   deletePost: () => {},
+  fetching: false,
 });
 
 const postListReducer = (currPostList, action) => {
@@ -46,14 +46,25 @@ const PostListProvider = ({ children }) => {
     });
   };
   const [postList, dispatchPostList] = useReducer(postListReducer, []);
+  const [fetching, setFetching] = useState(false);
   //fetching data from server...
   useEffect(() => {
-    fetch("https://dummyjson.com/posts")
+    setFetching(true);
+    const controller = new AbortController();
+    const signal = controller.signal;
+    fetch("https://dummyjson.com/posts", { signal })
       .then((res) => res.json())
-      .then((data) => addIntialPosts(data.posts));
+      .then((data) => {
+        addIntialPosts(data.posts);
+        setFetching(false);
+      });
+    return () => {
+      // if user switch to another component, it'll stop the 3rd party call.
+      controller.abort();
+    };
   }, []);
   return (
-    <PostList.Provider value={{ postList, addPost, deletePost }}>
+    <PostList.Provider value={{ postList, addPost, deletePost, fetching }}>
       {children}
     </PostList.Provider>
   );

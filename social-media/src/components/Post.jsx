@@ -3,7 +3,6 @@ import { AiFillDelete } from "react-icons/ai";
 import { PostList } from "../store/post-list-store";
 
 const Post = ({ post }) => {
-  console.log(post);
   const [reactionCount, setReactionCount] = useState(post.reactions);
   const handleReactionClick = () => {
     setReactionCount(reactionCount + 1);
