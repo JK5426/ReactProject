@@ -1,8 +1,9 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 
 export const PostList = createContext({
   postList: [],
   addPost: () => {},
+  addIntialPosts: () => {},
   deletePost: () => {},
 });
 
@@ -12,8 +13,9 @@ const postListReducer = (currPostList, action) => {
     newPostList = currPostList.filter(
       (post) => post.id !== action.payload.postId
     );
+  } else if (action.type === "ADD_INITIAL_POSTS") {
+    newPostList = action.payload.posts;
   } else if (action.type === "NEW_POST") {
-    console.log("add element");
     newPostList = [...currPostList, action.payload];
   }
   return newPostList;
@@ -35,35 +37,26 @@ const PostListProvider = ({ children }) => {
     });
   };
 
-  const [postList, dispatchPostList] = useReducer(
-    postListReducer,
-    DEFAULT_POST_LIST
-  );
-
+  const addIntialPosts = (posts) => {
+    dispatchPostList({
+      type: "ADD_INITIAL_POSTS",
+      payload: {
+        posts,
+      },
+    });
+  };
+  const [postList, dispatchPostList] = useReducer(postListReducer, []);
+  //fetching data from server...
+  useEffect(() => {
+    fetch("https://dummyjson.com/posts")
+      .then((res) => res.json())
+      .then((data) => addIntialPosts(data.posts));
+  }, []);
   return (
     <PostList.Provider value={{ postList, addPost, deletePost }}>
       {children}
     </PostList.Provider>
   );
 };
-
-const DEFAULT_POST_LIST = [
-  {
-    id: "1",
-    title: "Going to Pune",
-    body: "Hi Friends, I am going to Pune for my vocations. Hope to enjoy a lot.",
-    reaction: 0,
-    userId: "user-1",
-    tags: ["vocation", "Pune", "Travelling"],
-  },
-  {
-    id: "2",
-    title: "Pass ho gye bhai",
-    body: "4 saal ke masti ke baad bhi pass ho gye bhai",
-    reaction: 0,
-    userId: "user-2",
-    tags: ["B.Tech", "Unbelieveable", "Passout"],
-  },
-];
 
 export default PostListProvider;

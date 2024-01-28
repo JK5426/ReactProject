@@ -3,11 +3,12 @@ import { AiFillDelete } from "react-icons/ai";
 import { PostList } from "../store/post-list-store";
 
 const Post = ({ post }) => {
-  const [reactionCount, setReactionCount] = useState(post.reaction);
+  console.log(post);
+  const [reactionCount, setReactionCount] = useState(post.reactions);
   const handleReactionClick = () => {
     setReactionCount(reactionCount + 1);
     // to store the likes untill refesh
-    post.reaction = reactionCount + 1;
+    post.reactions = reactionCount + 1;
   };
   const { deletePost } = useContext(PostList);
   return (
