@@ -63,6 +63,7 @@ const PostListProvider = ({ children }) => {
       controller.abort();
     };
   }, []);
+
   return (
     <PostList.Provider value={{ postList, addPost, deletePost, fetching }}>
       {children}

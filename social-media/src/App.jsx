@@ -7,6 +7,7 @@ import CreatePost from "./components/CreatePost";
 import PostList from "./components/PostList";
 import { useState } from "react";
 import PostListProvider from "./store/post-list-store";
+import CurrentTime from "./components/CurrentTime";
 
 function App() {
   const [selectedTab, setSelectedTab] = useState("Home");
@@ -19,6 +20,7 @@ function App() {
           {selectedTab === "CreatePost" && (
             <CreatePost setSelectedTab={setSelectedTab} />
           )}
+          {selectedTab === "Home" && <CurrentTime />}
           {selectedTab === "Home" && <PostList />}
           <Footer />
         </div>

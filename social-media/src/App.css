@@ -42,3 +42,8 @@
 .spinner {
   margin: 10% 0;
 }
+.date-time {
+  text-align: right;
+  margin-right: 10px;
+  font-weight: 600;
+}
